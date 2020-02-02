@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-        <table>
-                <tr>
-                
-                    <th>id</th>
-                    <th>productname</th>
-                   
-                    <th>price</th>
-                    <th>discription</th>
-                    <th>Cname_id</th>
-                    <th>Delete</th>
-                    <th>edit</th>
-                    
-                </tr>
-                {% for u in plist %}
-                <tr>
-                    
-                    <td>{{u.id}}</td>
-                    <td>{{u.Pname}}</td>
-                    <td>{{u.Price}}</td>
-                    <td>{{u.Discription}}</td>
-                    <td>{{u.Cname_id}}</td>
-                    
-                    <td colspan="2"><a href="deleteproduct/{{u.id}}">Delete</a></td>
-                    <td colspan="2"><a href="editproduct?id={{u.id}}">Edit</a></td>
-                    
-                </tr>
-                {% endfor %}
-            </table>
+    <table>
+        <tr>
+
+            <th>id</th>
+            <th>productname</th>
+
+            <th>price</th>
+            <th>discription</th>
+            <th>Cname_id</th>
+            <th>Delete</th>
+            <th>edit</th>
+
+        </tr>
+        {% for u in plist %}
+        <tr>
+
+            <td>{{u.id}}</td>
+            <td>{{u.Pname}}</td>
+            <td>{{u.Price}}</td>
+            <td>{{u.Discription}}</td>
+            <td>{{u.Cname_id}}</td>
+
+            <td colspan="2"><a href="deleteproduct/{{u.id}}">Delete</a></td>
+            <td colspan="2"><a href="editproduct/{{u.id}}">Edit</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
 </body>
+
 </html>

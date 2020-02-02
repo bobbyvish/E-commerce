@@ -18,8 +18,8 @@ from django.urls import path
 from .import views
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('index', views.index),
+    path('admin/', admin.site.urls),
+    path('', views.index),
     path('addcategory', views.addcategory),
     path('savecategory', views.savecategory),
     path('adduser', views.adduser),
@@ -32,5 +32,7 @@ urlpatterns = [
     path('deleteuser', views.deleteuser),
     path('deleteproduct/<int:id>', views.deleteproduct),
     path('deletecategory/<str:CName>', views.deletecategory),
-    path('editcategory/<str:CName>', views.editcategory)
+    path('editcategory/<str:CName>', views.editcategory),
+    path('editproduct/<int:id>', views.editproduct),
+    path('updateproduct/<int:id>', views.updateproduct)
 ]
