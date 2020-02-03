@@ -1,44 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
-
 <body>
-  <form action="/updateproduct/{{edit_pro.id}}" method="POST">
-    {% csrf_token%}
-    <table>
-      <input type="hidden" name="id" value="{{edit_pro.id}}">
-      <tr>
-        <th><label for="id_Pname">Pname:</label></th>
-        <td><input type="text" name="Pname" maxlength="100" required id="id_Pname" value="{{ edit_pro.Pname}}"></td>
-      </tr>
-      <tr>
-        <th><label for="id_Price">Price:</label></th>
-        <td><input type="text" name="Price" maxlength="100" required id="id_Price" value="{{ edit_pro.Price}}"></td>
-      </tr>
-      <tr>
-        <th><label for="id_Discription">Discription:</label></th>
-        <td><input type="text" name="Discription" maxlength="255" required id="id_Discription"
-            value="{{ edit_pro.Discription}}"></td>
-      </tr>
-      <tr>
-        <th><label for="id_Cname">Cname:</label></th>
-        <td><select name="Cname" id="id_Cname" value="{{ edit_pro.Cname}}">
-          </select></td>
-      </tr>
-      <tr>
-        <td>
-          <button type="submit">Submit</button>
-
-        </td>
-      </tr>
-    </table>
-  </form>
+        <form action="/updateproduct/{{id.id}}" method="POST">
+                {% csrf_token %}
+                <table>
+                    {{form.as_table}}
+                    <tr>
+                        <td>
+                                <button type="submit">Update</button>
+        
+                        </td>
+                    </tr>
+                </table>
+            </form>
 </body>
-
 </html>
