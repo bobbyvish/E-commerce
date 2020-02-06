@@ -91,10 +91,10 @@ def editcategory(request, CName):
 
 
 def editproduct(request, id):
-    editpro = Product.objects.get(id=id)
-    # updatepro = Productform(request.POST, instance=editpro)
+    id = Product.objects.get(id=id)
+    form = Productform(instance=id)
     # updatepro.save()
-    return render(request, 'editproduct.html', {'edit_pro': editpro})
+    return render(request, 'editproduct.html', {'form': form,'id':id})
 
 
 def updateproduct(request, id):
