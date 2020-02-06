@@ -6,7 +6,14 @@ from Mywebsiteapp.models import Category, Product, User
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    category = Category.objects.all()
+    product = Product.objects.all()
+    return render(request, 'index.html', {"catlist": category, "product": product})
+
+
+# def index(request, CName):
+#     pro = Product.objects.get(CName=CName)
+#     return render(request, 'index.html', {'product': pro})
 
 
 def addcategory(request):

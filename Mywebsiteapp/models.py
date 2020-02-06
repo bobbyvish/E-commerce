@@ -7,7 +7,7 @@ class Category(models.Model):
         db_table='category'
     
 class User(models.Model):
-    Name = models.CharField(max_length=30)
+    Name = models.CharField(max_length=30,)
     Contact = models.CharField(max_length=15)
     Email = models.EmailField(primary_key=True, max_length=255)
     Password = models.CharField(max_length=16)
