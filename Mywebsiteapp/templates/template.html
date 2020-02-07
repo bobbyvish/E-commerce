@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="static/css/main.css" />
+</head>
+
+<body>
+  <!-- {% include 'old_navbar.html' %} -->
+
+  <!-- Navigation -->
+  {% include 'includes/navbar.html' %}
+
+  <!-- Page Content -->
+  <div class="containe pl-5 pr-5">
+    <div class="row">
+      {% include 'includes/sidebar.html'%}
+      <!-- /.col-lg-3 -->
+      <div class="col-lg-9">
+        {% include 'includes/productpage.html'%}
+        <!-- /.col-lg-9 -->
+      </div>
+      <!-- /.row -->
+    </div>
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  {% include 'includes/footer.html'%}
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous">
+</script>
+<script src="static/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</html>
