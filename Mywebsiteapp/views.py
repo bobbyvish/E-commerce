@@ -11,9 +11,9 @@ def index(request):
     return render(request, 'index.html', {"catlist": category, "product": product})
 
 
-# def index(request, CName):
-#     pro = Product.objects.get(CName=CName)
-#     return render(request, 'index.html', {'product': pro})
+def getproduct(request, CName):
+    product = Product.objects.filter(Cname_id=CName)
+    return render(request, "index.html", {"product": product})
 
 
 def addcategory(request):
@@ -113,13 +113,27 @@ def login(request):
 def loginuser(request):
     email = request.POST.get('email')
     password = request.POST.get('password')
-    print('Data Center', email, password)
-    try:
-        ul = User.objects.get(Email=email)
-        if email == ul.Email and password == ul.Password:
-            request.session['Email'] = email
-            return redirect('/home')
-        else:
+
+    if email == 'admin@gmail.com' and password == 'admin':
+        request.session['Adminname'] = email
+        return redirect('/home')
+    else:
+        try:
+            ul = User.objects.get(Email=email)
+            if email == ul.Email and password == ul.Password:
+                request.session['Username'] = email
+                return redirect('/home')
+            else:
+                return render(request, 'login.html', {'lm': "invalid user name or password"})
+        except:
             return render(request, 'login.html', {'lm': "invalid user name or password"})
-    except:
-        return render(request, 'login.html', {'lm': "invalid user name or password"})
+
+
+def logout(request):
+    try:
+        del request.session['Username']
+        # del request.session['Adminname']
+
+    except KeyError:
+        pass
+    return redirect('/home')

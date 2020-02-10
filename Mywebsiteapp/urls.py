@@ -21,22 +21,33 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('home', views.index),
-    # path('index/<str:CName>', views.index),
+
+
+    #   category
     path('addcategory', views.addcategory),
     path('savecategory', views.savecategory),
-    path('adduser', views.adduser),
-    path('saveuser', views.saveuser),
-    path('addproduct', views.addproduct),
-    path('saveproduct', views.saveproduct),
     path('categorylist', views.categorylist),
-    path('userlist', views.userlist),
-    path('productlist', views.productlist),
-    path('deleteuser', views.deleteuser),
-    path('deleteproduct/<int:id>', views.deleteproduct),
     path('deletecategory/<str:CName>', views.deletecategory),
     path('editcategory/<str:CName>', views.editcategory),
+
+    # user
+    path('adduser', views.adduser),
+    path('saveuser', views.saveuser),
+    path('userlist', views.userlist),
+    path('deleteuser', views.deleteuser),
+
+    # product
+    path('addproduct', views.addproduct),
+    path('saveproduct', views.saveproduct),
+    path('productlist', views.productlist),
+    path('deleteproduct/<int:id>', views.deleteproduct),
     path('editproduct/<int:id>', views.editproduct),
     path('updateproduct/<int:id>', views.updateproduct),
+    path('getproduct/<str:CName>', views.getproduct),
+
+
+
     path('login', views.login),
-    path('loginuser', views.loginuser)
+    path('loginuser', views.loginuser),
+    path('logout', views.logout),
 ]

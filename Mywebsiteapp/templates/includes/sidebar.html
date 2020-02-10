@@ -2,9 +2,7 @@
   <h1 class="my-4">Shop Name</h1>
   <div class="list-group">
     {% for category in catlist %}
-    <a href="index/{{category.CName}}" class="list-group-item"
-      >{{category.CName}}</a
-    >
+    <a href="getproduct/{{category.CName}}" class="list-group-item">{{category.CName}}</a>
     {% endfor %}
   </div>
 </div>
