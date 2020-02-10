@@ -1,1 +1,16 @@
-{% extends 'template.html'%}
+{% extends 'template.html'%} {% block mainpage%}
+
+<!-- Page Content -->
+<div class="containe pl-5 pr-5">
+  <div class="row">
+    {% include 'includes/sidebar.html'%}
+    <!-- /.col-lg-3 -->
+    <div class="col-lg-9">
+      {% include 'includes/productpage.html'%}
+      <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
+  </div>
+</div>
+
+{% endblock %}

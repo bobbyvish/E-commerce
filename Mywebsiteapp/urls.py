@@ -20,6 +20,7 @@ from .import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
+    path('home', views.index),
     # path('index/<str:CName>', views.index),
     path('addcategory', views.addcategory),
     path('savecategory', views.savecategory),
@@ -36,4 +37,6 @@ urlpatterns = [
     path('editcategory/<str:CName>', views.editcategory),
     path('editproduct/<int:id>', views.editproduct),
     path('updateproduct/<int:id>', views.updateproduct),
+    path('login', views.login),
+    path('loginuser', views.loginuser)
 ]

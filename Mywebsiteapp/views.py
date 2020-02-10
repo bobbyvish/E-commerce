@@ -94,7 +94,7 @@ def editproduct(request, id):
     id = Product.objects.get(id=id)
     form = Productform(instance=id)
     # updatepro.save()
-    return render(request, 'editproduct.html', {'form': form,'id':id})
+    return render(request, 'editproduct.html', {'form': form, 'id': id})
 
 
 def updateproduct(request, id):
@@ -104,3 +104,22 @@ def updateproduct(request, id):
         updatepro.save()
         return redirect('/productlist')
     return redirect('/productlist')
+
+
+def login(request):
+    return render(request, "login.html")
+
+
+def loginuser(request):
+    email = request.POST.get('email')
+    password = request.POST.get('password')
+    print('Data Center', email, password)
+    try:
+        ul = User.objects.get(Email=email)
+        if email == ul.Email and password == ul.Password:
+            request.session['Email'] = email
+            return redirect('/home')
+        else:
+            return render(request, 'login.html', {'lm': "invalid user name or password"})
+    except:
+        return render(request, 'login.html', {'lm': "invalid user name or password"})
