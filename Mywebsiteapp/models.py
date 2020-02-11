@@ -26,7 +26,7 @@ class Product(models.Model):
     Discription = models.CharField(max_length=255)
     Cname = models.ForeignKey(
         default=1, on_delete=models.CASCADE, to='Category')
-    Image = models.ImageField(upload_to='media/image/', default="")
+    Image = models.ImageField(upload_to='image/', default="")
 
     class Meta:
         db_table = 'product'

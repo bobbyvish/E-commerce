@@ -50,14 +50,14 @@ def adduser(request):
 
 
 def saveuser(request):
-    user = Userform(request.POST)
+    user = Userform(request.POST, request.FILES)
     user.save()
     return redirect('/userlist')
 
 
 def categorylist(request):
     catlist = Category.objects.all()
-    return render(request, 'categorlist.html', {'catlist': catlist})
+    return render(request, 'categorylist.html', {'catlist': catlist})
 
 
 def userlist(request):
