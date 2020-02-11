@@ -137,8 +137,9 @@ def loginuser(request):
 
 def logout(request):
     try:
-        del request.session['Username']
-        # del request.session['Adminname']
+        ls = list(request.session.keys())
+        for i in ls:
+            del request.session[i]
 
     except KeyError:
         pass
