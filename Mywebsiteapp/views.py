@@ -7,13 +7,19 @@ from Mywebsiteapp.models import Category, Product, User
 # Create your views here.
 def index(request):
     category = Category.objects.all()
-    product = Product.objects.all()
-    return render(request, 'index.html', {"catlist": category, "product": product})
+
+    cat = request.GET.get('category')
+    if cat is not None:
+        product = Product.objects.filter(Cname_id=cat)
+        return render(request, 'index.html', {"catlist": category, "product": product})
+    else:
+        product = Product.objects.all()
+        return render(request, 'index.html', {"catlist": category, "product": product})
 
 
-def getproduct(request, CName):
-    product = Product.objects.filter(Cname_id=CName)
-    return render(request, "index.html", {"product": product})
+# def getproduct(request, CName):
+#     product = Product.objects.filter(Cname_id=CName)
+#     return render(request, "index.html", {"product": product})
 
 
 def addcategory(request):
@@ -137,3 +143,7 @@ def logout(request):
     except KeyError:
         pass
     return redirect('/home')
+
+
+def cart(request):
+    return render(request, 'cart.html')

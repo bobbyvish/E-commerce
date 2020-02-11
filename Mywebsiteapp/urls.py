@@ -43,11 +43,13 @@ urlpatterns = [
     path('deleteproduct/<int:id>', views.deleteproduct),
     path('editproduct/<int:id>', views.editproduct),
     path('updateproduct/<int:id>', views.updateproduct),
-    path('getproduct/<str:CName>', views.getproduct),
+    # path('getproduct/<str:CName>', views.getproduct),
 
 
 
     path('login', views.login),
     path('loginuser', views.loginuser),
     path('logout', views.logout),
+    path('cart', views.cart),
+
 ]
