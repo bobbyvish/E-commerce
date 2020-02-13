@@ -30,3 +30,16 @@ class Product(models.Model):
 
     class Meta:
         db_table = 'product'
+
+
+class Cart(models.Model):
+    P_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    Email = models.ForeignKey(User, on_delete=models.CASCADE)
+    Quantity = models.CharField(max_length=50, default=1)
+
+    class Meta:
+        db_table = 'cart'
+
+    def __init__(self, pid, Email):
+        self.Email = Email
+        self.P_id = pid

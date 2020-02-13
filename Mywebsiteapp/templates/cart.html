@@ -1,20 +1,37 @@
-{% extends 'template.html'%}{%block mainpage  %}
-<div class="container">
+{% extends 'template.html'%}{%block mainpage %}
+<div class="container pt-5 pb-5">
+  <h2>Your cart</h2>
+  <hr />
   <div class="row">
-    <div class="col-lg-6">
-      <h2>Your cart</h2>
+    <div class="col-lg-8">
+      {% for details in cartproduct %}
       <div class="container">
         <div class="row">
-          <div class="col-lg-6">image</div>
+          <div class="col-lg-6"><img src="{{details.Image.url}}" /></div>
+
           <div class="col-lg-6">
-            
-            <p>50000 RS</p>
-            <p>discription</p>
+            <p>{{details.Pname}}</p>
+            <p>{{details.Price}}</p>
+            <p>{{details.Discription}}</p>
           </div>
         </div>
       </div>
+      {%endfor %}
     </div>
-    <div class="col-lg-6"></div>
+    <div class="col-lg-4 border border-dark">
+      <div class="d-flex justify-content-center"><h3>10 item in cart</h3></div>
+      <hr />
+      <div class="d-flex justify-content-between">
+        <h5>SubTotal</h5>
+        <h5>5200000rs</h5>
+      </div>
+      <hr />
+      <div class="d-flex justify-content-between">
+        <h5>Total</h5>
+        <h5>5200000rs</h5>
+      </div>
+      <hr />
+    </div>
   </div>
 </div>
 {%endblock%}

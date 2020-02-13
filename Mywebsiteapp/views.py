@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from Mywebsiteapp.form import Categoryform, Productform, Userform
-from Mywebsiteapp.models import Category, Product, User
+from Mywebsiteapp.form import Categoryform, Productform, Userform, Cartform
+from Mywebsiteapp.models import Category, Product, User, Cart
 
 
 # Create your views here.
+
+
 def index(request):
     category = Category.objects.all()
 
@@ -147,4 +149,14 @@ def logout(request):
 
 
 def cart(request):
-    return render(request, 'cart.html')
+    id = request.GET.get('pro_id')
+    pro_id = Product.objects.get(id=id)
+    email = request.session.get('Username')
+    ul = User.objects.get(Email=email)
+    if email is not None:
+        c = Cart(pro_id, ul)
+        cf = Cartform(instance=c)
+        cf.save()
+        return render(request, 'cart.html')
+    else:
+        return render(request, 'login.html')
