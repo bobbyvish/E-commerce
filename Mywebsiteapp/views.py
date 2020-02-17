@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from Mywebsiteapp.form import Categoryform, Productform, Userform, Cartform
 from Mywebsiteapp.models import Category, Product, User, Cart
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 # Create your views here.
@@ -41,7 +43,7 @@ def addproduct(request):
 
 
 def saveproduct(request):
-    product = Productform(request.POST)
+    product = Productform(request.POST, request.FILES)
     product.save()
     return HttpResponse('<h3>success</h3>')
 
@@ -52,7 +54,7 @@ def adduser(request):
 
 
 def saveuser(request):
-    user = Userform(request.POST, request.FILES)
+    user = Userform(request.POST)
     user.save()
     return redirect('/userlist')
 
@@ -148,15 +150,51 @@ def logout(request):
     return redirect('/home')
 
 
+# def add_to_cart(request, pro_id):
+#     id = request.GET.get('pro_id')
+#     pro_id = Product.objects.get(id=id)
+#     email = request.session.get('Username')
+#     ul = User.objects.get(Email=email)
+#     if email is not None:
+#         c = Cart(pro_id, ul)
+#         cf = Cartform(instance=c)
+#         cf.save()
+#         return render(request, 'cart.html')
+#     else:
+#         return render(request, 'login.html')
+
+    # https://github.com/muvatech/Shopping-Cart-Using-Django-2.0-and-Python-3.6/blob/master/cart/cart.py
+
+# def add_to_cart(request, pro_id):
+#     if request.user.is_authenticated():
+#         try:
+#             product = Product.objects.get(pk=pro_id)
+#         except ObjectDoesNotExist:
+#             pass
+#         else:
+#             try:
+#                 cart = Cart.objects.get(user=request.user, active=True)
+#             except ObjectDoesNotExist:
+#                 cart = Cart.objects.create(user=request.user)
+#                 cart.save()
+#                 cart.add_to_cart(pro_id)
+#                 return redirect('cart')
+#             else:
+#                 return redirect('home')
+
+# def add_to_cart(request):
+#     pro_id = request.GET.get('pro_id')
+#     product = get_object_or_404(Product, pk=pro_id)
+#     cart, created = Cart.objects.get_or_create(
+#         user=request.user.Email, active=True)
+#     order, created = CartOrder.objects.get_or_create(
+#         product_id=product, cart=cart)
+#     order.quantity += 1
+#     order.save()
+#     messages.success(request, "cart updated")
+#     return redirect('cart')
+
 def cart(request):
-    id = request.GET.get('pro_id')
-    pro_id = Product.objects.get(id=id)
-    email = request.session.get('Username')
-    ul = User.objects.get(Email=email)
-    if email is not None:
-        c = Cart(pro_id, ul)
-        cf = Cartform(instance=c)
-        cf.save()
-        return render(request, 'cart.html')
-    else:
-        return render(request, 'login.html')
+    cart = Cart.objects.all()
+    print(cart)
+    return render(request, "cart.html", {"cart": cart})

@@ -4,19 +4,20 @@
   <hr />
   <div class="row">
     <div class="col-lg-8">
-      {% for details in cartproduct %}
+      {% for item in cart.Product_set %}
       <div class="container">
         <div class="row">
-          <div class="col-lg-6"><img src="{{details.Image.url}}" /></div>
+          <div class="col-lg-6"><img src="{{item.Image.url}}" /></div>
 
           <div class="col-lg-6">
-            <p>{{details.Pname}}</p>
-            <p>{{details.Price}}</p>
-            <p>{{details.Discription}}</p>
+            <p>{{item.Pname}}</p>
+            <p>{{item.Price}}</p>
+            <p>{{item.Discription}}</p>
+            <p>{{item.Email}}</p>
           </div>
         </div>
       </div>
-      {%endfor %}
+      {% endfor %}
     </div>
     <div class="col-lg-4 border border-dark">
       <div class="d-flex justify-content-center"><h3>10 item in cart</h3></div>

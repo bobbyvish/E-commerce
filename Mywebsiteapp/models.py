@@ -33,13 +33,35 @@ class Product(models.Model):
 
 
 class Cart(models.Model):
-    P_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    Product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, null=True, blank=True)
     Email = models.ForeignKey(User, on_delete=models.CASCADE)
-    Quantity = models.CharField(max_length=50, default=1)
+    active = models.BooleanField(default=True)
+    # Quantity = models.CharField(max_length=50, default=1)
 
     class Meta:
         db_table = 'cart'
 
-    def __init__(self, pid, Email):
-        self.Email = Email
-        self.P_id = pid
+    def __unicode__(self):
+        return "Cart id: %s" % (self.id)
+
+    # def __unicode__(self):
+    #     return "%s" % (self.Email)
+
+    # def add_to_cart(self, book_id):
+    #     product = Product.objects.get(pk=book_id)
+    #     try:
+    #         preexisting_order = ProductOrder.objects.get(
+    #             product_id=product, cart=self)
+    #         preexisting_order.Quantity += 1
+    #         preexisting_order.save()
+    #     except ProductOrder.DoesNotExist:
+    #         new_order = BookOrder.objects.create(
+    #             product_id=product
+    #             cart=self
+    #             quantity=1
+    #         )
+    #         new_order.save()
+
+    #         def __unicode__(self):
+    #             return "%s" % (self.book_id)
