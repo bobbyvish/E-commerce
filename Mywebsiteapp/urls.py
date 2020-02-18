@@ -52,6 +52,9 @@ urlpatterns = [
     path('login', views.login),
     path('loginuser', views.loginuser),
     path('logout', views.logout),
+
+    # cart
     path('cart', views.cart),
+    path('add_to_cart', views.add_to_cart),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

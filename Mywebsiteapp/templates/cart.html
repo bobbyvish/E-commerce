@@ -4,34 +4,57 @@
   <hr />
   <div class="row">
     <div class="col-lg-8">
-      {% for item in cart.Product_set %}
+      {% for item in cartitems %}
       <div class="container">
         <div class="row">
-          <div class="col-lg-6"><img src="{{item.Image.url}}" /></div>
+          <div class="col-lg-6">
+            <img src="{{item.Product.Image.url}}" width="150" height="150" />
+          </div>
 
           <div class="col-lg-6">
-            <p>{{item.Pname}}</p>
-            <p>{{item.Price}}</p>
-            <p>{{item.Discription}}</p>
-            <p>{{item.Email}}</p>
+            <p>{{item.Product.Pname}}</p>
+            <p>{{item.Product.Price}}</p>
+            <p>{{item.Product.Discription|truncatewords:2}}</p>
+            <!-- <p>{{item.Email}}</p> -->
           </div>
         </div>
       </div>
+      <hr />
       {% endfor %}
     </div>
-    <div class="col-lg-4 border border-dark">
-      <div class="d-flex justify-content-center"><h3>10 item in cart</h3></div>
-      <hr />
-      <div class="d-flex justify-content-between">
-        <h5>SubTotal</h5>
-        <h5>5200000rs</h5>
+    <div class="col-lg-4">
+      <div class="border border-dark p-3">
+        <div class="d-flex justify-content-center">
+          <h3>10 item in cart</h3>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <h5>SubTotal</h5>
+          <h5>{{tp}}rs</h5>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <h5>Total</h5>
+          <h5>{{tp}}rs</h5>
+        </div>
+        <hr />
       </div>
-      <hr />
-      <div class="d-flex justify-content-between">
-        <h5>Total</h5>
-        <h5>5200000rs</h5>
+      <div class="p-4">
+        <div class="d-inline ">
+          <button class="btn btn-danger">
+            <a href="#" class="text-white text-decoration-none"
+              >Process to Pay</a
+            >
+          </button>
+        </div>
+        <div class="d-inline ">
+          <button class="btn btn-success">
+            <a href="home" class="text-white text-decoration-none"
+              >Continue Shopping</a
+            >
+          </button>
+        </div>
       </div>
-      <hr />
     </div>
   </div>
 </div>

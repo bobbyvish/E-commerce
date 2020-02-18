@@ -60,13 +60,13 @@
   <div class="col-lg-3 col-md-6 mb-4">
     <div class="card h-100">
       {%if pro.Image%}
-      <div class="card-image pt-3 pr-5 pl-5">
+      <div class="card-image pt-3 pr-4 pl-4">
         <a href="#"
           ><img
             class="card-img-top"
             src="{{pro.Image.url}}"
             alt=""
-            width="100"
+            width="120"
             height="150"
         /></a>
       </div>
@@ -77,7 +77,7 @@
         </h6>
         <h6>{{pro.Price}}Rs</h6>
         <p class="card-text">
-          {{ pro.Discription }}
+          {{ pro.Discription|truncatewords:3 }}
         </p>
       </div>
       <div class="card-footer">

@@ -35,9 +35,9 @@ class Product(models.Model):
 class Cart(models.Model):
     Product = models.ForeignKey(
         Product, on_delete=models.CASCADE, null=True, blank=True)
-    Email = models.ForeignKey(User, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    # Quantity = models.CharField(max_length=50, default=1)
+    Email = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    # active = models.BooleanField(default=True)
+    Quantity = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'cart'

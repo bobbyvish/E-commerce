@@ -184,17 +184,33 @@ def logout(request):
 
 # def add_to_cart(request):
 #     pro_id = request.GET.get('pro_id')
-#     product = get_object_or_404(Product, pk=pro_id)
-#     cart, created = Cart.objects.get_or_create(
-#         user=request.user.Email, active=True)
-#     order, created = CartOrder.objects.get_or_create(
-#         product_id=product, cart=cart)
-#     order.quantity += 1
-#     order.save()
+#     product = get_object_or_404(Product, 'pro_id')
+#     cart= Cart.objects.get_or_create(
+#         user=request.session.get('Username'), active=True)
+#
+#     cart.save()
 #     messages.success(request, "cart updated")
 #     return redirect('cart')
 
+def add_to_cart(request):
+    p_id = request.GET.get("pro_id")
+
+    email = request.session.get('Username')
+    print(p_id, email)
+    product = Product.objects.get(id=p_id)
+
+    user = User.objects.get(Email=email)
+    user_cart = Cart()
+    user_cart.Email = user
+    user_cart.Product = product
+    user_cart.save()
+    return redirect('/home')
+
+
 def cart(request):
-    cart = Cart.objects.all()
-    print(cart)
-    return render(request, "cart.html", {"cart": cart})
+    cartitem = Cart.objects.filter(Email=request.session.get("Username"))
+    tp = 0
+    for item in cartitem:
+        tp = tp+int(item.Product.Price)
+    print("prce:", tp)
+    return render(request, 'cart.html', {"cartitems": cartitem, "tp": tp})
