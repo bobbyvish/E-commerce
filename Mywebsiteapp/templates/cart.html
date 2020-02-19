@@ -2,24 +2,29 @@
 <div class="container pt-5 pb-5">
   <h2>Your cart</h2>
   <hr />
-  <div class="row">
+  <div class="row ">
     <div class="col-lg-8">
       {% for item in cartitems %}
       <div class="container">
-        <div class="row">
+        <div class="row click-cart">
           <div class="col-lg-6">
             <img src="{{item.Product.Image.url}}" width="150" height="150" />
           </div>
 
-          <div class="col-lg-6">
+          <div class="col-lg-4 cart-details">
             <p>{{item.Product.Pname}}</p>
-            <p>{{item.Product.Price}}</p>
+            <p class="cart-price">{{item.Product.Price}} Rs</p>
             <p>{{item.Product.Discription|truncatewords:2}}</p>
             <!-- <p>{{item.Email}}</p> -->
+            <input class="quantity-input" type="number" value="1">
+          </div>
+          <div class="col-lg-2">
+          <button class="delete-cart btn btn-danger">x</button>
           </div>
         </div>
+         <hr />
       </div>
-      <hr />
+
       {% endfor %}
     </div>
     <div class="col-lg-4">
@@ -33,7 +38,7 @@
           <h5>{{tp}}rs</h5>
         </div>
         <hr />
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between cart-total-price">
           <h5>Total</h5>
           <h5>{{tp}}rs</h5>
         </div>
