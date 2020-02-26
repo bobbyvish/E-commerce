@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import HttpResponse
-from Mywebsiteapp.form import Categoryform, Productform, Userform, Cartform
+from Mywebsiteapp.form import Categoryform, Productform, Userform
 from Mywebsiteapp.models import Category, Product, User, Cart
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -209,22 +209,31 @@ def add_to_cart(request):
 
 
 def cart(request):
-    cartitem = Cart.objects.filter(Email=request.session.get("Username"))
-    tp = 0
-    for item in cartitem:
-        tp = tp+int(item.Product.Price)
-    # print("prce:", tp)
-    return render(request, 'cart.html', {"cartitems": cartitem, "tp": tp})
-
-
-def delete_cart_product(request):
     id = request.GET.get("id")
-    print("sfhsafhsifhsf", id)
     if id is not None:
         cartproduct = Cart.objects.get(id=id)
         cartproduct.delete()
-        date = 'deleted'
-        error = 'notdeleted'
-        return HttpResponse(data)
+        # error = 'notdeleted'
+        return HttpResponse("delete")
+        # return redirect("cart")
+        # cart(request)
     else:
-        return HttpResponse(error)
+        cartitem = Cart.objects.filter(Email=request.session.get("Username"))
+        tp = 0
+        for item in cartitem:
+            tp = tp+int(item.Product.Price)
+    # print("prce:", tp)
+        return render(request, 'cart.html', {"cartitems": cartitem, "tp": tp})
+
+
+# def delete_cart_product(request):
+#     id = request.GET.get("id")
+#     print("sfhsafhsifhsf", id)
+#     if id is not None:
+#         cartproduct = Cart.objects.get(id=id)
+#         cartproduct.delete()
+#         date = 'deleted'
+#         error = 'notdeleted'
+#         return HttpResponse(data)
+#     else:
+#         return HttpResponse(error)

@@ -46,16 +46,25 @@ $(".delete-cart").click(function () {
   // alert(id);
   $.ajax({
 
-    URL: "/delete_cart_product",
+    URL: "cart",
     data: "id=" + id,
 
 
     success: function (data) {
       // console.log(deleted);
       alert(data);
+      window.location.reload();
 
     }
 
 
+  })
+})
+
+$(document).ready(function () {
+  $("#quantity").on('input', function () {
+    var quantity = $("#quantity").val();
+    var item_price = document.getElementById("item-price").innerText;
+    alert(item_price);
   })
 })

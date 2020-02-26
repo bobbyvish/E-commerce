@@ -56,6 +56,6 @@ urlpatterns = [
     # cart
     path('cart', views.cart),
     path('add_to_cart', views.add_to_cart),
-    path('delete_cart_product', views.delete_cart_product),
+    # path('delete_cart_product', views.delete_cart_product),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
