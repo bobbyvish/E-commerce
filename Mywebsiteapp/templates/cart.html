@@ -7,22 +7,25 @@
       {% for item in cartitems %}
       <div class="container">
         <div class="row click-cart">
+
+
           <div class="col-lg-6">
             <img src="{{item.Product.Image.url}}" width="150" height="150" />
           </div>
 
           <div class="col-lg-4 cart-details">
             <p>{{item.Product.Pname}}</p>
-            <p class="cart-price">{{item.Product.Price}} Rs</p>
+            <p class="cart-price" id="cart-item-price">{{item.Product.Price}}</p>
             <p>{{item.Product.Discription|truncatewords:2}}</p>
             <!-- <p>{{item.Email}}</p> -->
-            <input class="quantity-input w-25 h-25" id="quantity" type="number" value="1" MIN="1" MAX="20">
-          <span class="ml-5" id="item-price">{{item.Product.Price}} Rs</span>
+            <input class="quantity-input w-25 h-25" id="quantity" type="number" value="{{item.Quantity}}" MIN="1" MAX="20">
+          <span class="ml-5 item-price" id="price{{item.id}}">{{item.Product.Price}}</span>
           </div>
           <div class="col-lg-2">
-          <button class="delete-cart btn btn-danger" id={{item.id}}>x</button>
+          <button class="delete-cart btn btn-danger" id="{{item.id}}">x</button>
           </div>
         </div>
+
          <hr />
       </div>
 
@@ -36,12 +39,12 @@
         <hr />
         <div class="d-flex justify-content-between">
           <h5>SubTotal</h5>
-          <h5>{{tp}}rs</h5>
+          <h5>{{tp}}</h5>
         </div>
         <hr />
         <div class="d-flex justify-content-between cart-total-price">
           <h5>Total</h5>
-          <h5>{{tp}}rs</h5>
+          <h5 class="cart-total-price">{{tp}}</h5>
         </div>
         <hr />
       </div>
