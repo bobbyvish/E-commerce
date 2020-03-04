@@ -15,11 +15,11 @@
 
           <div class="col-lg-4 cart-details">
             <p>{{item.Product.Pname}}</p>
-            <p class="cart-price" id="cart-item-price">{{item.Product.Price}}</p>
+            <p class="cart-price" id="unit-price{{item.id}}">{{item.Product.Price}}</p>
             <p>{{item.Product.Discription|truncatewords:2}}</p>
             <!-- <p>{{item.Email}}</p> -->
-            <input class="quantity-input w-25 h-25" id="quantity" type="number" value="{{item.Quantity}}" MIN="1" MAX="20">
-          <span class="ml-5 item-price" id="price{{item.id}}">{{item.Product.Price}}</span>
+            <input class="quantity-input w-25 h-25" id="quantity{{item.id}}" type="number" value="{{item.Quantity}}" MIN="1" MAX="20">
+          <span class="ml-5 total-price" id="price{{item.id}}">{{item.Product.Price}} Rs</span>
           </div>
           <div class="col-lg-2">
           <button class="delete-cart btn btn-danger" id="{{item.id}}">x</button>
@@ -32,22 +32,32 @@
       {% endfor %}
     </div>
     <div class="col-lg-4">
-      <div class="border border-dark p-3">
-        <div class="d-flex justify-content-center">
-          <h3>10 item in cart</h3>
-        </div>
-        <hr />
-        <div class="d-flex justify-content-between">
-          <h5>SubTotal</h5>
-          <h5>{{tp}}</h5>
-        </div>
-        <hr />
-        <div class="d-flex justify-content-between cart-total-price">
-          <h5>Total</h5>
-          <h5 class="cart-total-price">{{tp}}</h5>
-        </div>
-        <hr />
+
+      <div class="border border-dark">
+      <table class="table">
+      <thead>
+      <tr>
+      <th>Summary</th>
+      <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>SubTotal</td>
+      <td id="subtotal"></td>
+      </tr>
+      <tr>
+      <td>Shipping</td>
+      <td id="shipping">50</td>
+      </tr>
+      <tr>
+      <td>Total</td>
+      <td id="total"></td>
+      </tr>
+      </tbody>
+</table>
       </div>
+
       <div class="p-4">
         <div class="d-inline ">
           <button class="btn btn-danger">

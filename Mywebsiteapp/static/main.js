@@ -61,22 +61,26 @@ $(".delete-cart").click(function () {
   })
 })
 
-// $(document).ready(function () {
-//   $("#quantity").on('input', function () {
-//     var item_total = 0;
-//     var quantity = $("#quantity").val();
-//     // console.log(quantity)
-//     var item_price = document.getElementById("cart-item-price").innerText;
-//     var item_price_remove_rs = item_price.split("Rs").join("");
-//     // console.log(remove_rs);
-//     item_total = quantity * item_price_remove_rs;
-//     // alert(item_total);
-//     document.getElementById("item-price").innerText = item_total + " Rs";
-//   })
-// })
+$(document).ready(function () {
+  var total = $('.total-price')
+  // console.log("total price is :" + total);
+  console.log("total" + total);
+  var subtotal = 0
+  for (var i = 0; i < total.length; i++) {
+    subtotal = subtotal + parseInt(total[i].innerHTML);
 
-$('#quantity').on('change', function () {
+    console.log(total[i].innerHTML);
+  }
+  document.getElementById('subtotal').innerHTML = subtotal + " Rs";
+  document.getElementById('shipping').innerHTML = 50 + " Rs";
+  document.getElementById('total').innerHTML = subtotal + 50 + " Rs";
+
+})
+//  function for quantityChanged
+$('.quantity-input').on('change', function () {
   var quantityInput = document.getElementsByClassName("quantity-input");
+  // alert("changed")
+
   for (i = 0; i < quantityInput.length; i++) {
     let input = quantityInput[i];
     input.addEventListener('change', quantityChanged);
@@ -88,33 +92,20 @@ function quantityChanged(event) {
   if (isNaN(input.value) || input.value <= 0) {
     input.value = 1;
   }
-  updateCartTotal()
-}
+  var id = this.id.slice(8, );
+  document.getElementById('price' + id).innerHTML = document.getElementById('unit-price' + id).innerHTML * this.value + " Rs";
+  var total = $('.total-price')
 
-function updateCartTotal() {
-  var cartItemContainer = document.getElementsByClassName('click-cart')
-  var cartRows = cartItemContainer.getElementsByClassName('cart-details');
-  var item_total = 0;
-  var total = 0;
-  for (var i = 0; i < cartRows.length; i++) {
-    var cartRow = cartRows[i];
-    var item_price = cartRow.getElementsByClassName("cart-price")
+  console.log("total" + total);
+  var subtotal = 0
+  for (var i = 0; i < total.length; i++) {
+    subtotal = subtotal + parseInt(total[i].innerHTML);
 
-    // var item_price_remove_rs = item_price.innerText.replace('Rs', '');
-    alert(item_price_remove_rs);
-    var quantityElement = cartRow.getElementsByClassName('quantity-input')
-    var quantity = quantityElement.value
-    console.log(quantity);
-    item_total = quantity * item_price;
-    alert(item_total);
-    cartRow.getElementsByClassName("item-price").innerText = item_total;
-    var priceElement = cartRow.querySelector('#item-price')
-
-
-
-    total = total + item_total;
-
+    console.log(total[i].innerHTML);
   }
-  total = Math.round(total * 100) / 100
-  document.querySelector('.cart-total-price').innerText = total;
+  document.getElementById('subtotal').innerHTML = subtotal + " Rs";
+  document.getElementById('shipping').innerHTML = 50 + " Rs";
+  document.getElementById('total').innerHTML = subtotal + 50 + " Rs";
+
+
 }
