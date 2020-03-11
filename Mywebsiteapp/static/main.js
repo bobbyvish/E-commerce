@@ -64,17 +64,25 @@ $(".delete-cart").click(function () {
 $(document).ready(function () {
   var total = $('.total-price')
   // console.log("total price is :" + total);
-  console.log("total" + total);
+
   var subtotal = 0
-  for (var i = 0; i < total.length; i++) {
-    subtotal = subtotal + parseInt(total[i].innerHTML);
+  if (total.length == 0) {
+    var element = document.getElementById('empty-message');
+    element.innerHTML = "Your Cart is Empty";
+    element.setAttribute("class", "alert alert-danger");
 
-    console.log(total[i].innerHTML);
+
+    console.log('element');
+  } else {
+    for (var i = 0; i < total.length; i++) {
+      subtotal = subtotal + parseInt(total[i].innerHTML);
+
+      console.log(total[i].innerHTML);
+    }
+    document.getElementById('subtotal').innerHTML = subtotal + " Rs";
+    document.getElementById('shipping').innerHTML = (50 * parseInt(total.length)) + " Rs";
+    document.getElementById('total').innerHTML = subtotal + 50 + " Rs";
   }
-  document.getElementById('subtotal').innerHTML = subtotal + " Rs";
-  document.getElementById('shipping').innerHTML = 50 + " Rs";
-  document.getElementById('total').innerHTML = subtotal + 50 + " Rs";
-
 })
 //  function for quantityChanged
 $('.quantity-input').on('change', function () {
@@ -109,3 +117,11 @@ function quantityChanged(event) {
 
 
 }
+
+$(document).ready(function () {
+  // document.getElementsByClassName("ship").innerHTML = document.getElementById('shipping').innerHTML;
+  // document.getElementById("checkoutcarttotal").innerHTML = document.getElementById('total').innerHTML;
+  var total = document.getElementById("total").innerHTML;
+  console.log(total);
+  console.log("loaded");
+})

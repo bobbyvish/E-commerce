@@ -13,12 +13,16 @@
   <body>
     <!-- {% include 'old_navbar.html' %} -->
     <!-- Navigation -->
+    <div class="page-container">
+    <div class="content-wrap">
     {% include 'includes/navbar.html' %} {%block mainpage%} {%endblock%}
+    </div>
 
     <!-- /.container -->
 
     <!-- Footer -->
     {% include 'includes/footer.html'%}
+    </div>
   </body>
 
   <script

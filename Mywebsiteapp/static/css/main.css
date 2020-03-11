@@ -1,13 +1,22 @@
 body {
   padding-top: 56px;
+
 }
 
-.footer {
-  position: fixed;
-  left: 0;
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  padding-bottom: 6rem;
+  /* Footer height */
+}
+
+footer {
+  position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: red;
-  color: white;
-  text-align: center;
+  height: 4rem;
+  /* Footer height */
 }

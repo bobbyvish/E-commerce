@@ -1,5 +1,7 @@
 {% extends 'template.html'%}{%block mainpage %}
+
 <div class="container pt-5 pb-5">
+<h3  id="empty-message"></h3>
   <h2>Your cart</h2>
   <hr />
   <div class="row ">
@@ -48,7 +50,7 @@
       </tr>
       <tr>
       <td>Shipping</td>
-      <td id="shipping">50</td>
+      <td id="shipping"></td>
       </tr>
       <tr>
       <td>Total</td>
@@ -61,7 +63,7 @@
       <div class="p-4">
         <div class="d-inline ">
           <button class="btn btn-danger">
-            <a href="#" class="text-white text-decoration-none"
+            <a href="checkout" class="text-white text-decoration-none"
               >Process to Pay</a
             >
           </button>

@@ -2,7 +2,7 @@
 <div class="container p-5">
   <form action="loginuser" method="POST">
     {% csrf_token %} {% if lm is not None %}
-    <h6>{{lm}}</h6>
+    <h6 class="alert alert-danger">{{lm}}</h6>
     {% endif %}
     <div class="form-group">
       <label for="email">Email address</label>

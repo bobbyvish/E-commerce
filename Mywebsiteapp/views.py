@@ -150,48 +150,6 @@ def logout(request):
     return redirect('/home')
 
 
-# def add_to_cart(request, pro_id):
-#     id = request.GET.get('pro_id')
-#     pro_id = Product.objects.get(id=id)
-#     email = request.session.get('Username')
-#     ul = User.objects.get(Email=email)
-#     if email is not None:
-#         c = Cart(pro_id, ul)
-#         cf = Cartform(instance=c)
-#         cf.save()
-#         return render(request, 'cart.html')
-#     else:
-#         return render(request, 'login.html')
-
-    # https://github.com/muvatech/Shopping-Cart-Using-Django-2.0-and-Python-3.6/blob/master/cart/cart.py
-
-# def add_to_cart(request, pro_id):
-#     if request.user.is_authenticated():
-#         try:
-#             product = Product.objects.get(pk=pro_id)
-#         except ObjectDoesNotExist:
-#             pass
-#         else:
-#             try:
-#                 cart = Cart.objects.get(user=request.user, active=True)
-#             except ObjectDoesNotExist:
-#                 cart = Cart.objects.create(user=request.user)
-#                 cart.save()
-#                 cart.add_to_cart(pro_id)
-#                 return redirect('cart')
-#             else:
-#                 return redirect('home')
-
-# def add_to_cart(request):
-#     pro_id = request.GET.get('pro_id')
-#     product = get_object_or_404(Product, 'pro_id')
-#     cart= Cart.objects.get_or_create(
-#         user=request.session.get('Username'), active=True)
-#
-#     cart.save()
-#     messages.success(request, "cart updated")
-#     return redirect('cart')
-
 def add_to_cart(request):
 
     email = request.session.get('Username')
@@ -200,10 +158,14 @@ def add_to_cart(request):
         product = Product.objects.get(id=p_id)
         user = User.objects.get(Email=email)
         user_cart = Cart()
-        user_cart.Email = user
-        user_cart.Product = product
-        user_cart.save()
-        return redirect('/home')
+        if Cart.objects.filter(Product=product).exists():
+            messages.success(request, 'Product already added in your Cart.')
+            return redirect('/home')
+        else:
+            user_cart.Email = user
+            user_cart.Product = product
+            user_cart.save()
+            return redirect('/home')
     else:
         return redirect('/login')
 
@@ -222,18 +184,9 @@ def cart(request):
         tp = 0
         for item in cartitem:
             tp = tp+int(item.Product.Price)
-    # print("prce:", tp)
+
         return render(request, 'cart.html', {"cartitems": cartitem, "tp": tp})
 
 
-# def delete_cart_product(request):
-#     id = request.GET.get("id")
-#     print("sfhsafhsifhsf", id)
-#     if id is not None:
-#         cartproduct = Cart.objects.get(id=id)
-#         cartproduct.delete()
-#         date = 'deleted'
-#         error = 'notdeleted'
-#         return HttpResponse(data)
-#     else:
-#         return HttpResponse(error)
+def checkoutcart(request):
+    return render(request, 'checkout.html')

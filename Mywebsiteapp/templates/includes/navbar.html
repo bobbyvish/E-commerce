@@ -25,8 +25,15 @@
       </li>
 
       {% if request.session.Username is not None %}
-      <li class="nav-item">
-        <a class="nav-link" href="#">MyOrder</a>
+
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          MyAccount
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="#">Order</a>
+
       </li>
       <li class="nav-item">
         <a class="nav-link">Welcome {{request.session.Username}}</a>
