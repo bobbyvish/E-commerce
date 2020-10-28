@@ -1,127 +1,38 @@
-// var removeCartItemButton = document.getElementsByClassName('devare-cart')
-// for (var i = 0; i < removeCartItemButton.length; i++) {
-//   var button = removeCartItemButton[i]
-//   button.addEventListener('click', removecartitem)
-// }
 
-// var quantityInput = document.getElementsByClassName("quantity-input");
-// for (i = 0; i < quantityInput.length; i++) {
-//   var input = quantityInput[i]
-//   input.addEventListener('change', quantityChanged);
-// }
+var updatebtns = document.getElementsByClassName('update-cart')
 
-// function removecartitem(event) {
-//   var buttonClicked = event.target;
-//   buttonClicked.parentElement.parentElement.remove()
-//   updateCartTotal()
-// }
+for (i = 0; i < updatebtns.length; i++){
+  updatebtns[i].addEventListener('click', function () {
+    var productId = this.dataset.product
+    var action = this.dataset.action
+    console.log(productId, action)
+    console.log(user)
+    if (user) {
+      updateUserOrder(productId,action)
 
-// function quantityChanged(event) {
-//   var input = event.target
-//   if (isNaN(input.value) || input.value <= 0) {
-//     input.value = 1;
-//   }
-//   updateCartTotal()
-// }
+    } else {
 
-// function updateCartTotal() {
-//   var cartItemContainer = document.querySelector('.click-cart');
-//   var cartRows = cartItemContainer.querySelectorAll('.cart-details');
-//   var total = 0
-//   for (var i = 0; i < cartRows.length; i++) {
-//     var cartRow = cartRows[i]
-//     var priceElement = cartRow.querySelector('.cart-price');
-//     var quantityElement = cartRow.querySelector('.quantity-input');
-//     var price = parseFloat(priceElement.innerText)
-//     var quantity = quantityElement.value
-//     total = total + (price * quantity)
-
-//   }
-//   total = Math.round(total * 100) / 100
-//   document.querySelector('.cart-total-price').innerText = total;
-// }
-
-$(".delete-cart").click(function () {
-  var id = $(this).attr("id");
-  // alert(id);
-  $.ajax({
-
-    URL: "cart",
-    data: "id=" + id,
-
-
-    success: function (data) {
-      // console.log(deleted);
-      alert(data);
-      window.location.reload();
-
+      location.href="/login"
     }
-
-
   })
-})
-
-$(document).ready(function () {
-  var total = $('.total-price')
-  // console.log("total price is :" + total);
-
-  var subtotal = 0
-  if (total.length == 0) {
-    var element = document.getElementById('empty-message');
-    element.innerHTML = "Your Cart is Empty";
-    element.setAttribute("class", "alert alert-danger");
-
-
-    console.log('element');
-  } else {
-    for (var i = 0; i < total.length; i++) {
-      subtotal = subtotal + parseInt(total[i].innerHTML);
-
-      console.log(total[i].innerHTML);
-    }
-    document.getElementById('subtotal').innerHTML = subtotal + " Rs";
-    document.getElementById('shipping').innerHTML = (50 * parseInt(total.length)) + " Rs";
-    document.getElementById('total').innerHTML = subtotal + 50 + " Rs";
-  }
-})
-//  function for quantityChanged
-$('.quantity-input').on('change', function () {
-  var quantityInput = document.getElementsByClassName("quantity-input");
-  // alert("changed")
-
-  for (i = 0; i < quantityInput.length; i++) {
-    let input = quantityInput[i];
-    input.addEventListener('change', quantityChanged);
-  }
-})
-
-function quantityChanged(event) {
-  var input = event.target
-  if (isNaN(input.value) || input.value <= 0) {
-    input.value = 1;
-  }
-  var id = this.id.slice(8, );
-  document.getElementById('price' + id).innerHTML = document.getElementById('unit-price' + id).innerHTML * this.value + " Rs";
-  var total = $('.total-price')
-
-  console.log("total" + total);
-  var subtotal = 0
-  for (var i = 0; i < total.length; i++) {
-    subtotal = subtotal + parseInt(total[i].innerHTML);
-
-    console.log(total[i].innerHTML);
-  }
-  document.getElementById('subtotal').innerHTML = subtotal + " Rs";
-  document.getElementById('shipping').innerHTML = 50 + " Rs";
-  document.getElementById('total').innerHTML = subtotal + 50 + " Rs";
-
-
 }
 
-$(document).ready(function () {
-  // document.getElementsByClassName("ship").innerHTML = document.getElementById('shipping').innerHTML;
-  // document.getElementById("checkoutcarttotal").innerHTML = document.getElementById('total').innerHTML;
-  var total = document.getElementById("total").innerHTML;
-  console.log(total);
-  console.log("loaded");
-})
+function updateUserOrder(productId, action) {
+  console.log('user log send dta')
+  var url = '/update_item/'
+  fetch(url, {
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrftoken,
+    },
+    body:JSON.stringify({'productId':productId,'action':action})
+  })
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      console.log('data:', data)
+      location.reload()
+  })
+}

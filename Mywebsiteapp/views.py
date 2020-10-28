@@ -1,24 +1,44 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import HttpResponse
 from Mywebsiteapp.form import Categoryform, Productform, Userform
-from Mywebsiteapp.models import Category, Product, User, Cart
+from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
+import datetime
 
 
 # Create your views here.
 
 
 def index(request):
+    email = request.session.get('Username')
     category = Category.objects.all()
 
     cat = request.GET.get('category')
     if cat is not None:
         product = Product.objects.filter(Cname_id=cat)
-        return render(request, 'index.html', {"catlist": category, "product": product})
+
+        context = {"catlist": category,
+                   "product": product}
+        # return render(request, 'index.html', {"catlist": category, "product": product})
     else:
+        if email is not None:
+            customer = User.objects.get(Email=email)
+            order, created = Order.objects.get_or_create(
+                customer=customer, complete=False)
+            items = order.orderitem_set.all()
+            cartItems = order.get_cart_items
+        else:
+            items = []
+            order = {'get_cart_total': 0, 'get_cart_items': 0}
+            cartItems = order['get_cart_items']
         product = Product.objects.all()
-        return render(request, 'index.html', {"catlist": category, "product": product})
+        context = {"catlist": category,
+                   "product": product, "cartItems": cartItems}
+    return render(request, 'index.html', context)
 
 
 # def getproduct(request, CName):
@@ -171,22 +191,114 @@ def add_to_cart(request):
 
 
 def cart(request):
-    id = request.GET.get("id")
-    if id is not None:
-        cartproduct = Cart.objects.get(id=id)
-        cartproduct.delete()
-        # error = 'notdeleted'
-        return HttpResponse("delete")
-        # return redirect("cart")
-        # cart(request)
+    email = request.session.get('Username')
+    if email is not None:
+        customer = User.objects.get(Email=email)
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
     else:
-        cartitem = Cart.objects.filter(Email=request.session.get("Username"))
-        tp = 0
-        for item in cartitem:
-            tp = tp+int(item.Product.Price)
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
+    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    # print(context)
+    return render(request, 'cart.html', context)
 
-        return render(request, 'cart.html', {"cartitems": cartitem, "tp": tp})
+
+def checkout(request):
+    email = request.session.get('Username')
+    if email is not None:
+        customer = User.objects.get(Email=email)
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
+    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    # print(context)
+    return render(request, 'checkout.html', context)
 
 
-def checkoutcart(request):
-    return render(request, 'checkout.html')
+def updateItem(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    customer = User.objects.get(Email=request.session.get('Username'))
+    product = Product.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(
+        customer=customer, complete=False)
+    orderItem, created = OrderItem.objects.get_or_create(
+        order=order, product=product)
+
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+
+    orderItem.save()
+
+    if orderItem.quantity <= 0 or action == 'delete':
+        orderItem.delete()
+
+    return JsonResponse('item was added', safe=False)
+
+
+def processOrder(request):
+    print('data:', request.body)
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+    email = request.session.get('Username')
+    if email is not None:
+        customer = User.objects.get(Email=email)
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        total = float(data['shippingInfo']['total'])
+        print('total:', total)
+        order.transaction_id = transaction_id
+        if total == float(order.get_cart_total):
+            order.complete = True
+        order.save()
+
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data['shippingInfo']['address'],
+            city=data['shippingInfo']['city'],
+            state=data['shippingInfo']['state'],
+            zipcode=data['shippingInfo']['zipcode'],
+        )
+        print(ShippingAddress.address)
+    else:
+        print('User is not logged in')
+
+    return JsonResponse('Payment Complete', safe=False)
+
+
+# def cart(request):
+#     id = request.GET.get("id")
+#     if id is not None:
+#         cartproduct = Cart.objects.get(id=id)
+#         cartproduct.delete()
+#         # error = 'notdeleted'
+#         return HttpResponse("delete")
+#         # return redirect("cart")
+#         # cart(request)
+#     else:
+#         cartitem = Cart.objects.filter(Email=request.session.get("Username"))
+#         tp = 0
+#         for item in cartitem:
+#             tp = tp+int(item.Product.Price)
+
+#         return render(request, 'cart.html', {"cartitems": cartitem, "tp": tp})
+
+
+# def checkoutcart(request):
+#     pid = request.GET.get("data")
+#     print(pid)
+#     # return HttpResponse(pid)
+#     return render(request, 'checkout.html')

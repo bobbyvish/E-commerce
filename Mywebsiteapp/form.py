@@ -1,5 +1,5 @@
 from django import forms
-from Mywebsiteapp.models import Category, User, Product, Cart
+from Mywebsiteapp.models import *
 
 
 class Categoryform(forms.ModelForm):
@@ -20,7 +20,7 @@ class Productform(forms.ModelForm):
         fields = '__all__'
 
 
-class Cartform(forms.ModelForm):
-    class Meta:
-        model = Cart
-        fields = '__all__'
+# class Cartform(forms.ModelForm):
+#     class Meta:
+#         model = Cart
+#         fields = '__all__'

@@ -2,6 +2,8 @@
 
 <!-- Page Content -->
 {%if messages %}{% for message in messages %}{% if message.tags%}<script>alert('{{message}}')</script>{% endif%}{% endfor%}{% endif %}
+<br>
+<br>
 <div class="containe pl-5 pr-5">
   <div class="row">
     {% include 'includes/sidebar.html'%}

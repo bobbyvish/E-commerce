@@ -1,7 +1,8 @@
-{% extends 'template.html'%}{%block mainpage %}
+{% extends 'template.html'%}{% block mainpage %}
+{% comment %}
 <br>
 <br>
-<div class="container">
+<div class="container mt-5">
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
 
@@ -21,7 +22,7 @@
                     <span class="text-muted">700</span>
                 </li>
 
-
+                {% endcomment %}
                 {% comment %} <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <img src="" height="45px" class="d-inline" alt="">
                     <div class="d-inline w-100 mx-3">
@@ -31,6 +32,7 @@
                     </div>
                     <span class="text-muted">700</span>
                 </li> {% endcomment %}
+                {% comment %}
             </ul>
             <ul class="list-group mb-3">
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
@@ -120,7 +122,7 @@
                 </div>
                 <hr class="mb-4">
 
-                <h4 class="mb-3">Payment</h4>
+                <h4 class="mb-3">Payment</h4> {% endcomment %}
 
                 {% comment %} <div class="d-block my-3">
                     <div class="custom-control custom-radio" onclick="$('#creditdebit').show();">
@@ -174,6 +176,7 @@
                         </div>
                     </div>
                 </div> {% endcomment %}
+                {% comment %}
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
             </form>
@@ -181,7 +184,137 @@
     </div>
 </div>
 <br>
+<br> {% endcomment %}
+
+
 <br>
+<br>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box-element" id="form-wrapper">
+                <form id="form">
+                    <!-- <div id="user-info">
+                        <div class="form-field m-2">
+                            <input required class="form-control" type="text" name="name" placeholder="Name..">
+                        </div>
+                        <div class="form-field m-2">
+                            <input required class="form-control" type="email" name="email" placeholder="Email..">
+                        </div>
+                    </div> -->
+
+                    <div id="shipping-info">
+                        <hr>
+                        <p>Shipping Information:</p>
+                        <hr>
+                        <div class="form-field m-2">
+                            <input class="form-control" type="text" name="address" placeholder="Address..">
+                        </div>
+                        <div class="form-field m-2">
+                            <input class="form-control" type="text" name="city" placeholder="City..">
+                        </div>
+                        <div class="form-field m-2">
+                            <input class="form-control" type="text" name="state" placeholder="State..">
+                        </div>
+                        <div class="form-field m-2">
+                            <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                        </div>
+                    </div>
+                    <hr>
+                    <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+                </form>
+            </div>
+            <br>
+            <div class="box-element hidden" id="payment-info">
+                <small>Paypal Options</small>
+                <button id="make-payment" class="btn btn-success">Make payment</button>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="box-element">
+                <a class="btn btn-outline-dark" href="">&#x2190; Back to Cart</a>
+                <hr>
+                <h3>Order Summary</h3>
+
+                <hr>
+                <h5>Items: {{order.get_cart_items}}</h5>
+                <h5>Total: {{order.get_cart_total}}Rs</h5>
+                <hr>
+                {% for item in items %}
+                <div class="cart-row d-flex">
+                    <div style="flex:2"><img class="row-image" src="{{item.product.Image.url}}"></div>
+                    <div style="flex:2">
+                        <p>{{item.product.Pname}}</p>
+                    </div>
+                    <div style="flex:1">
+                        <p>{{item.product.Price}}</p>
+                    </div>
+                    <div style="flex:1">
+                        <p>{{item.quantity}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var total="{{order.get_cart_total}}"
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function (e) {
+        e.preventDefault()
+        console.log('form submitted')
+        document.getElementById('form-button').classList.add('hidden')
+        document.getElementById('payment-info').classList.remove('hidden')
+    })
+
+    document.getElementById('make-payment').addEventListener('click', function (e) {
+        submitFormData()
+    })
+
+    function submitFormData() {
+        var shippingInfo={
+
+            'address': null,
+            'city': null,
+            'state':null,
+            'zipcode':null,
+            'total': total,
+        }
+        if (user){
+            shippingInfo.address=form.address.value
+            shippingInfo.city=form.city.value
+            shippingInfo.state=form.state.value
+            shippingInfo.zipcode=form.zipcode.value
+
+        }
+        console.log(shippingInfo)
+
+        var url= '/process_order/'
+        fetch(url,{
+            method:'Post',
+            headers:{
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body:JSON.stringify({'shippingInfo':shippingInfo})
+        })
+        .then((response) => {
+             response.json()
+        })
+        .then((data)=>{
+            console.log('Success:',data);
+            alert('Transaction Completed');
+            window.location.href= '/home' ;
+        }
+        )
 
 
-{%endblock%}
+
+    }
+</script>
+{% endblock %}
